@@ -1,0 +1,7 @@
+.idea
+
+# pyenv local 설정
+.python-version
+
+# 환경 변수
+.env
