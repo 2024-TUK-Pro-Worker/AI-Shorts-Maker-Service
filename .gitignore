@@ -14,4 +14,5 @@ Resource/Audio/*.*
 Resource/Deployment/*.*
 
 # Config
-Config
+Config/*.*
+!Config/kube_sample.yaml
