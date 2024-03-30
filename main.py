@@ -1,8 +1,6 @@
-from OpenAI import callChatGPT, callTTS
-
-chatgpt = callChatGPT()
-tts = callTTS()
+from OpenAI import callChatGPT, callDallE, callTTS
 
 if __name__ == '__main__':
-    # chatgpt.getResponse()
-    tts.getResponse()
+    # callChatGPT()
+    callDallE()
+    # callTTS()

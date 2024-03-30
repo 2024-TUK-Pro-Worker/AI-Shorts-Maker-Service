@@ -1,10 +1,13 @@
-from .ChatGPT import ChatGPT
-from .TTS import TTS
+from .ApiCall import *
 
 
 def callChatGPT():
-    return ChatGPT()
+    return ApiCall().callGpt()
+
+
+def callDallE():
+    return ApiCall().callDallE()
 
 
 def callTTS():
-    return TTS()
+    return ApiCall().callTTS()

@@ -6,4 +6,12 @@
 # 환경 변수
 .env
 
-TTSFile
+# 리소스 파일
+Resource/Image/*.*
+Resource/Audio/*.*
+
+# yaml 파일 삭제
+Resource/Deployment/*.*
+
+# Config
+Config
