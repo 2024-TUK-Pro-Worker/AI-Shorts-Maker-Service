@@ -1,8 +1,6 @@
-import json
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-from pathlib import Path
 import urllib.request
 
 
@@ -24,17 +22,13 @@ class ApiCall:
             model="gpt-3.5-turbo",
             messages=[
                 {
-                    "role": "system", "content": "너는 영상 시나리오를 제작하는 도구야",
+                    "role": "system", "content": "너는 드라마 시나리오를 작성하는 작가야",
                     "role": "user", "content": requestCommand
                 }
             ],
         )
 
-        messageData = json.loads(response.choices[0].message.content)
-
-        print(messageData)
-
-        return messageData
+        return response.choices[0].message.content
 
     def callDallE(self, prompt, filename):
         response = self.gptClient.images.generate(
@@ -53,9 +47,11 @@ class ApiCall:
             image.write(imageResult)
             image.close()
 
-    def callTTS(self, speech, sex, filename):
+    def getTTSVoiceList(self):
+        return ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
+
+    def callTTS(self, speech, voice, filename):
         speech_file_path = f"{self.audioPath}/{filename}.mp3"
-        voice = "onyx" if sex == '남' else "nova"
         response = self.gptClient.audio.speech.create(
             model="tts-1",
             voice=voice,
