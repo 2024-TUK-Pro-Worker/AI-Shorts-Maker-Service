@@ -5,8 +5,8 @@ def callChatGPT():
     return ApiCall().callGpt()
 
 
-def callDallE():
-    return ApiCall().callDallE()
+def callDallE(prompt, filename):
+    return ApiCall().callDallE(prompt, filename)
 
 
 def callTTS():
