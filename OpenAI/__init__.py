@@ -9,5 +9,5 @@ def callDallE(prompt, filename):
     return ApiCall().callDallE(prompt, filename)
 
 
-def callTTS():
-    return ApiCall().callTTS()
+def callTTS(speech, sex, filename):
+    return ApiCall().callTTS(speech, sex, filename)

@@ -20,7 +20,6 @@ class ApiCall:
             requestCommand = GPTPrompt.read()
             GPTPrompt.close()
 
-
         response = self.gptClient.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -54,12 +53,13 @@ class ApiCall:
             image.write(imageResult)
             image.close()
 
-    def callTTS(self):
-        speech_file_path = Path(__file__).parent.parent / "TTSFile/speech.mp3"
+    def callTTS(self, speech, sex, filename):
+        speech_file_path = f"{self.audioPath}/{filename}.mp3"
+        voice = "onyx" if sex == '남' else "nova"
         response = self.gptClient.audio.speech.create(
             model="tts-1",
-            voice="onyx",
-            input="이것은 한글 테스트 입니다."
+            voice=voice,
+            input=speech
         )
 
         response.stream_to_file(speech_file_path)
