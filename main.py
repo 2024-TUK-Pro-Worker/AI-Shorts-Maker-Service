@@ -113,7 +113,7 @@ def appendBgm():
 
     # 기존 오디오와 새 오디오의 볼륨 조정(1.0이 기존 볼륨 크기 기준)
     originalAudio = video.audio.volumex(6.0)
-    additionalAudio = additionalAudio.volumex(0.2)
+    additionalAudio = additionalAudio.volumex(0.3)
 
     # 조정된 볼륨으로 오디오 결합
     combinedAudio = CompositeAudioClip([originalAudio, additionalAudio])
