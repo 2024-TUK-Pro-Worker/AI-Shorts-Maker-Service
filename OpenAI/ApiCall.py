@@ -1,12 +1,10 @@
 import os
-from dotenv import load_dotenv
 from openai import OpenAI
 import urllib.request
 
 
 class ApiCall:
     def __init__(self):
-        load_dotenv()
         self.gptClient = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.resourcePath = os.getenv("RESOURCE_PATH")
         self.audioPath = self.resourcePath + '/Audio'

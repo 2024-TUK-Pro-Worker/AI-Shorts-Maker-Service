@@ -7,9 +7,11 @@
 .env
 
 # 리소스 파일
+Resource/Scenario/*
 Resource/Image/*
 Resource/Audio/*
-Resource/Scenario/*
+Resource/Video/*
+Resource/Upload/*
 
 # yaml 파일 삭제
 Resource/Deployment/*.*
