@@ -209,7 +209,7 @@ def removeResource():
 
 
 if __name__ == '__main__':
-    # with open(f"{resourcePath}/Scenario/미스터리 쇼.txt", "r") as scenario:
+    # with open(f"{resourcePath}/Scenario/납치 사건.txt", "r") as scenario:
     #     gptResponse = scenario.read()
     #     scenario.close()
 

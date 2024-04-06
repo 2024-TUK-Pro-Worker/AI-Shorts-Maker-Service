@@ -29,21 +29,27 @@ class ApiCall:
         return response.choices[0].message.content
 
     def callDallE(self, prompt, filename):
-        response = self.gptClient.images.generate(
-            model="dall-e-3",
-            prompt=prompt,
-            size="1024x1024",
-            quality="standard",
-            n=1,
-        )
+        retryCnt = 0
+        try:
+            response = self.gptClient.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+                size="1024x1792",
+                quality="standard",
+                n=1,
+            )
 
-        url = response.data[0].url
+            url = response.data[0].url
 
-        imageResult = urllib.request.urlopen(url).read()
+            imageResult = urllib.request.urlopen(url).read()
 
-        with open(f"{self.imagePath}/{filename}.jpg", mode="wb") as image:
-            image.write(imageResult)
-            image.close()
+            with open(f"{self.imagePath}/{filename}.jpg", mode="wb") as image:
+                image.write(imageResult)
+                image.close()
+        except:
+            if retryCnt < 5:
+                retryCnt += 1
+                self.callDallE(prompt, filename)
 
     def getTTSVoiceList(self):
         return ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
