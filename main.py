@@ -214,9 +214,9 @@ if __name__ == '__main__':
     #     scenario.close()
 
     scenarioDir = f"{resourcePath}/Scenario"
-    audioDir = f"{resourcePath}/Audio/{title}"
-    imageDir = f"{resourcePath}/Image/{title}"
-    videoDir = f"{resourcePath}/Video/{title}"
+    audioDir = f"{resourcePath}/Audio"
+    imageDir = f"{resourcePath}/Image"
+    videoDir = f"{resourcePath}/Video"
     uploadDir = f"{resourcePath}/Upload"
     uploadTmpDir = f"{resourcePath}/Upload/tmp"
 
