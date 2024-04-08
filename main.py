@@ -213,7 +213,7 @@ if __name__ == '__main__':
     #     gptResponse = scenario.read()
     #     scenario.close()
 
-    resourceDir = f"{resourcePath}/Resource"
+    resourceDir = f"{resourcePath}"
     scenarioDir = f"{resourcePath}/Scenario"
     audioDir = f"{resourcePath}/Audio"
     imageDir = f"{resourcePath}/Image"
