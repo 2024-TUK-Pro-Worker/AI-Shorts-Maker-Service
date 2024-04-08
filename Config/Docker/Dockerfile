@@ -10,8 +10,8 @@ RUN git clone https://$token@github.com/2024-TUK-Pro-Worker/AI-Shorts-Maker-Serv
 
 RUN apk add --no-cache ffmpeg
 
-COPY .env .env
-
 WORKDIR /home/app/AI-Shorts-Maker-Service
+
+COPY .env .env
 
 #CMD [ "python3", "main.py"]
