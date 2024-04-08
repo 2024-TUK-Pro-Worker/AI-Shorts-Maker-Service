@@ -216,6 +216,7 @@ if __name__ == '__main__':
     scenarioDir = f"{resourcePath}/Scenario"
     audioDir = f"{resourcePath}/Audio/{title}"
     imageDir = f"{resourcePath}/Image/{title}"
+    videoDir = f"{resourcePath}/Video/{title}"
     uploadDir = f"{resourcePath}/Upload"
     uploadTmpDir = f"{resourcePath}/Upload/tmp"
 
@@ -227,6 +228,8 @@ if __name__ == '__main__':
         os.mkdir(imageDir)
     if not os.path.isdir(uploadDir):
         os.mkdir(uploadDir)
+    if not os.path.isdir(videoDir):
+        os.mkdir(videoDir)
     if not os.path.isdir(uploadTmpDir):
         os.mkdir(uploadTmpDir)
 
