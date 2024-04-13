@@ -17,4 +17,4 @@ WORKDIR /home/app/AI-Shorts-Maker-Service
 
 COPY .env .env
 
-#CMD [ "python3", "main.py"]
+CMD [ "python3", "main.py"]
