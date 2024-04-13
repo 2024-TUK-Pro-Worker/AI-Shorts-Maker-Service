@@ -213,7 +213,6 @@ if __name__ == '__main__':
     #     gptResponse = scenario.read()
     #     scenario.close()
 
-    resourceDir = f"{resourcePath}"
     scenarioDir = f"{resourcePath}/Scenario"
     audioDir = f"{resourcePath}/Audio"
     imageDir = f"{resourcePath}/Image"
@@ -221,8 +220,6 @@ if __name__ == '__main__':
     uploadDir = f"{resourcePath}/Upload"
     uploadTmpDir = f"{resourcePath}/Upload/tmp"
 
-    if not os.path.isdir(resourceDir):
-        os.mkdir(resourceDir)
     if not os.path.isdir(scenarioDir):
         os.mkdir(scenarioDir)
     if not os.path.isdir(audioDir):

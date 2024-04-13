@@ -13,9 +13,6 @@ Resource/Audio/*
 Resource/Video/*
 Resource/Upload/*
 
-# yaml 파일 삭제
-Resource/Deployment/*.*
-
 # Config
-Config/*.*
+Config/*
 !Config/kube_sample.yaml

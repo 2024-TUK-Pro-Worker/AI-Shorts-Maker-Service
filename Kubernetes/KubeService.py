@@ -6,7 +6,7 @@ import yaml
 
 
 # read yaml file as object
-with open("../Resource/Deployment/nginx_deployment.yaml") as f:
+with open("../Config/K8sYaml/Deployment/deployment.yaml") as f:
     nginx_deployment_yaml = yaml.safe_load(f)
 
 # load default config
