@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: ai-shorts-maker
 spec:
-  schedule: "* * * * *"
+  schedule: "20 * * * *"
   jobTemplate:
     spec:
       template:
