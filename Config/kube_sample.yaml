@@ -9,7 +9,7 @@ spec:
       template:
         spec:
           backoffLimit: 2
-          activeDeadlineSeconds: 100
+          activeDeadlineSeconds: 7200
           ttlSecondsAfterFinished: 60
           containers:
             - name: core-system
