@@ -3,11 +3,14 @@ kind: CronJob
 metadata:
   name: ai-shorts-maker
 spec:
-  schedule: "1 * * * *"
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
         spec:
+          backoffLimit: 2
+          activeDeadlineSeconds: 100
+          ttlSecondsAfterFinished: 60
           containers:
             - name: core-system
               image: lacydawun/pro-worker:latest
