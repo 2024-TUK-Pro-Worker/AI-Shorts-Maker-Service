@@ -15,4 +15,3 @@ Resource/Upload/*
 
 # Config
 Config/*
-!Config/kube_sample.yaml

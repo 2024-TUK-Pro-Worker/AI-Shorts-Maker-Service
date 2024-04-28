@@ -1,7 +1,10 @@
 import os
-from openai import OpenAI
+import pymysql
 import urllib.request
+from openai import OpenAI
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class ApiCall:
     def __init__(self):
@@ -12,15 +15,30 @@ class ApiCall:
         self.promptPath = self.resourcePath + '/Prompt'
 
     def callGpt(self):
-        with open(f"{self.promptPath}/GPTPrompt.txt", "r") as GPTPrompt:
+        promptType = ''
+
+        db = pymysql.connect(host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')), user=os.getenv('DB_USER'), password=os.getenv('DB_PW'),
+                             db=os.getenv('DB_NAME'), charset=os.getenv('DB_CHARSET'))
+        cur = db.cursor()
+        cur.execute("SELECT content FROM prompt WHERE uuid = %s", (os.getenv('UUID'),))
+        row = cur.fetchone()
+        db.close()
+
+        if row is not None:
+            promptType = 'Custom'
+
+        with open(f"{self.promptPath}/{promptType}GPTPrompt.txt", "r") as GPTPrompt:
             requestCommand = GPTPrompt.read()
             GPTPrompt.close()
+
+        if promptType == 'Custom':
+            requestCommand = row[0] + "\n" + requestCommand
 
         response = self.gptClient.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {
-                    "role": "system", "content": "너는 드라마 시나리오를 작성하는 작가야",
+                    "role": "system", "content": "너는 짧은 드라마 시나리오를 작성하는 작가야",
                     "role": "user", "content": requestCommand
                 }
             ],
