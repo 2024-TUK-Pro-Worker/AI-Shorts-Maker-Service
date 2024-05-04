@@ -2,10 +2,12 @@ import os
 import json
 import random
 import shutil
+import pymysql
 from pydub import *
 from moviepy.editor import *
 from dotenv import load_dotenv
-from OpenAI import callChatGPT, callDallE, callTTS, getTTSVoiceList
+from OpenAI import callChatGPT, callDallE
+from Google import callTTS, getTTSVoiceList
 
 load_dotenv()
 resourcePath = os.getenv("RESOURCE_PATH")
@@ -43,7 +45,7 @@ def makeResource(messageData):
                     if characterVoice.get(script['이름']) is None:
                         characterVoice[script['이름']] = random.choice(getTTSVoiceList())
 
-                    callTTS(script['스크립트'], characterVoice[script['이름']], f"{title}/{sceneIndex}-{script['순서']}")
+                    callTTS(script['스크립트'], characterVoice[script['이름']], f"{imageFilename}-{script['순서']}")
 
                     if audioIndex >= 2:
                         baseTTSFilename = f"{resourcePath}/Audio/{title}/{sceneIndex}-" + (
@@ -73,6 +75,7 @@ def createVideo(sceneIndex):
 
 
 def makeShorts():
+    global uuid
     global title
     global resourcePath
 
@@ -85,6 +88,14 @@ def makeShorts():
     finalVideoPath = f"{resourcePath}/Upload/tmp/{title}.mp4"
     finalVideoClip.write_videofile(finalVideoPath)
 
+    db = pymysql.connect(host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')), user=os.getenv('DB_USER'),
+                         password=os.getenv('DB_PW'),
+                         db=os.getenv('DB_NAME'), charset=os.getenv('DB_CHARSET'))
+    cur = db.cursor()
+    sql = "INSERT INTO video (uuid, gptTitle) VALUES (%s, %s)"
+    cur.execute(sql, (uuid, title))
+    db.commit()
+    db.close()
 
 def removeResource():
     global title

@@ -10,7 +10,6 @@ class ApiCall:
     def __init__(self):
         self.gptClient = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.resourcePath = os.getenv("RESOURCE_PATH")
-        self.audioPath = self.resourcePath + '/Audio'
         self.imagePath = self.resourcePath + '/Image'
         self.promptPath = self.resourcePath + '/Prompt'
 
@@ -71,13 +70,3 @@ class ApiCall:
 
     def getTTSVoiceList(self):
         return ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
-
-    def callTTS(self, speech, voice, filename):
-        speech_file_path = f"{self.audioPath}/{filename}.mp3"
-        response = self.gptClient.audio.speech.create(
-            model="tts-1",
-            voice=voice,
-            input=speech
-        )
-
-        response.stream_to_file(speech_file_path)

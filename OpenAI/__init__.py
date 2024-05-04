@@ -7,11 +7,3 @@ def callChatGPT():
 
 def callDallE(prompt, filename):
     return ApiCall().callDallE(prompt, filename)
-
-
-def callTTS(speech, voice, filename):
-    return ApiCall().callTTS(speech, voice, filename)
-
-
-def getTTSVoiceList():
-    return ApiCall().getTTSVoiceList()
