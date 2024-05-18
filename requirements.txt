@@ -44,3 +44,5 @@ uritemplate==4.1.1
 urllib3==2.2.1
 websocket-client==1.7.0
 pymysql==1.1.0
+google-api-python-client==2.129.0
+google-cloud-texttospeech==2.16.3
