@@ -16,6 +16,4 @@ RUN pip3 install -r requirements.txt
 
 COPY .env .env
 
-COPY ai-shorts-maker-9c5b7e4de3ce.json Config/Google/ai-shorts-maker-9c5b7e4de3ce.json
-
 CMD [ "python3", "main.py"]
