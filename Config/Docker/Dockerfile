@@ -16,4 +16,6 @@ WORKDIR /home/app/AI-Shorts-Maker-Service
 
 COPY .env .env
 
+COPY ai-shorts-maker-9c5b7e4de3ce.json Config/Google/ai-shorts-maker-9c5b7e4de3ce.json
+
 CMD [ "python3", "main.py"]
