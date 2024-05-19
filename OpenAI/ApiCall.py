@@ -80,10 +80,10 @@ class ApiCall:
             print('__ Dall-E 이미지 저장 성공 __')
         except Exception as e:
             print(e)
-            if retryCnt < 1:
-                retryCnt += 1
-                print(f'__ Dall-E API 요청 재시도 __')
-                self.callDallE(prompt, filename)
+            # if retryCnt < 1:
+            #     retryCnt += 1
+            #     print(f'__ Dall-E API 요청 재시도 __')
+            #     self.callDallE(prompt, filename)
 
     def getTTSVoiceList(self):
         return ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
