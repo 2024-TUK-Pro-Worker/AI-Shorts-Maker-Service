@@ -17,4 +17,3 @@ RUN pip3 install -r requirements.txt
 COPY .env .env
 
 #CMD [ "python3", "main.py"]
-ENTRYPOINT ["tail", "-f", "/dev/null"]
