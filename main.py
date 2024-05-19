@@ -31,9 +31,9 @@ def makeResource(messageData):
             title = scenario[key]
 
             if not os.path.isfile(f"{resourcePath}/Scenario/{title}.txt"):
-                os.makedirs(f"{resourcePath}/Audio/{title}")
-                os.makedirs(f"{resourcePath}/Image/{title}")
-                os.makedirs(f"{resourcePath}/Video/{title}")
+                os.makedirs(f"{resourcePath}/Audio/{title}", mode=0o777)
+                os.makedirs(f"{resourcePath}/Image/{title}", mode=0o777)
+                os.makedirs(f"{resourcePath}/Video/{title}", mode=0o777)
             print('__ 제목으로 리소스 path 생성 성공 __')
 
             print('__ 시나리오 저장 시도 __')
@@ -159,17 +159,17 @@ if __name__ == '__main__':
     uploadTmpDir = f"{resourcePath}/Upload/tmp"
 
     if not os.path.isdir(scenarioDir):
-        os.makedirs(scenarioDir)
+        os.makedirs(scenarioDir, mode=0o777)
     if not os.path.isdir(audioDir):
-        os.makedirs(audioDir)
+        os.makedirs(audioDir, mode=0o777)
     if not os.path.isdir(imageDir):
-        os.makedirs(imageDir)
+        os.makedirs(imageDir, mode=0o777)
     if not os.path.isdir(uploadDir):
-        os.makedirs(uploadDir)
+        os.makedirs(uploadDir, mode=0o777)
     if not os.path.isdir(videoDir):
-        os.makedirs(videoDir)
+        os.makedirs(videoDir, mode=0o777)
     if not os.path.isdir(uploadTmpDir):
-        os.makedirs(uploadTmpDir)
+        os.makedirs(uploadTmpDir, mode=0o777)
 
     print('__ 디렉토리 검증 및 생성 종료 __')
 
