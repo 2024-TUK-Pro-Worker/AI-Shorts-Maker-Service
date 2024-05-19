@@ -3,6 +3,7 @@ import json
 import random
 import shutil
 import pymysql
+import datetime
 from pydub import *
 from moviepy.editor import *
 from dotenv import load_dotenv
@@ -16,6 +17,8 @@ title = ''
 
 
 def makeResource(messageData):
+    print('__ 영상 리소스 제작 시작 __')
+
     global title
     global resourcePath
     scenario = json.loads(messageData)
@@ -23,30 +26,41 @@ def makeResource(messageData):
 
     for key in scenario.keys():
         if key == '제목':
+            print('__ 제목으로 리소스 path 생성 시도 __')
+
             title = scenario[key]
 
             if not os.path.isfile(f"{resourcePath}/Scenario/{title}.txt"):
                 os.makedirs(f"{resourcePath}/Audio/{title}")
                 os.makedirs(f"{resourcePath}/Image/{title}")
                 os.makedirs(f"{resourcePath}/Video/{title}")
+            print('__ 제목으로 리소스 path 생성 성공 __')
 
+            print('__ 시나리오 저장 시도 __')
             with open(f"{resourcePath}/Scenario/{title}.txt", "w") as scenarioFile:
                 scenarioFile.write(messageData)
                 scenarioFile.close()
-
+            print('__ 시나리오 저장 성공 __')
         elif key == '씬':
+            print('__ 씬별 리소스 제작 시작 __')
             sceneIndex = 1
             for scene in scenario[key]:
+                print(f'__ {sceneIndex}번째 씬 리소스 제작 시작 __')
                 imageFilename = f"{title}/{sceneIndex}"
+                print(f'__ {sceneIndex}번째 씬 Dall-E API 요청 시도 __')
                 callDallE(f"{scene['장소']}에서 {scene['상황']} 그려줘", imageFilename)
+                print(f'__ {sceneIndex}번째 씬 Dall-E API 요청 성공 __')
 
                 audioIndex = 1
                 for script in scene['대사']:
                     if characterVoice.get(script['이름']) is None:
                         characterVoice[script['이름']] = random.choice(getTTSVoiceList())
 
+                    print(f'__ {sceneIndex}번째 씬 대사 TTS 생성 시도 __')
                     callTTS(script['스크립트'], characterVoice[script['이름']], f"{imageFilename}-{script['순서']}")
+                    print(f'__ {sceneIndex}번째 씬 대사 TTS 생성 성공 __')
 
+                    print(f'__ {sceneIndex}번째 TTS 병합 작업 시도 __')
                     if audioIndex >= 2:
                         baseTTSFilename = f"{resourcePath}/Audio/{title}/{sceneIndex}-" + (
                             str((int(script['순서']) - 1)) if audioIndex == 2 else "TTS") + '.mp3'
@@ -57,10 +71,17 @@ def makeResource(messageData):
                         appendTTS.export(f"{resourcePath}/Audio/{title}/{sceneIndex}-TTS.mp3")
 
                     audioIndex += 1
+                    print(f'__ {sceneIndex}번째 TTS 병합 작업 성공 __')
 
+                print(f'__ {sceneIndex}번째 씬 영상 제작 __')
                 createVideo(sceneIndex)
+                print(f'__ {sceneIndex}번째 씬 영상 성공 __')
+
+                print(f'__ {sceneIndex}번째 씬 리소스 제작 종료 __')
 
                 sceneIndex += 1
+            print('__ 씬별 리소스 제작 종료 __')
+    print('__ 영상 리소스 제작 종료 __')
 
 
 def createVideo(sceneIndex):
@@ -75,10 +96,13 @@ def createVideo(sceneIndex):
 
 
 def makeShorts():
+    print('__ 숏츠 제작 시작 __')
+
     global uuid
     global title
     global resourcePath
 
+    print('__ 씬별 영상 병합 시도 __')
     videoList = sorted(os.listdir(f"{resourcePath}/Video/{title}"))
     videoClips = []
     for video in videoList:
@@ -87,7 +111,9 @@ def makeShorts():
     finalVideoClip = concatenate_videoclips(videoClips)
     finalVideoPath = f"{resourcePath}/Upload/tmp/{title}.mp4"
     finalVideoClip.write_videofile(finalVideoPath)
+    print('__ 씬별 영상 병합 성공 __')
 
+    print('__ 숏츠 영상 정보 저장 __')
     db = pymysql.connect(host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')), user=os.getenv('DB_USER'),
                          password=os.getenv('DB_PW'),
                          db=os.getenv('DB_NAME'), charset=os.getenv('DB_CHARSET'))
@@ -96,8 +122,13 @@ def makeShorts():
     cur.execute(sql, (uuid, title))
     db.commit()
     db.close()
+    print('__ 숏츠 영상 정보 성공 __')
+
+    print('__ 숏츠 제작 종료 __')
 
 def removeResource():
+    print('__ 영상 리소스 삭제 시작 __')
+
     global title
     global resourcePath
 
@@ -114,8 +145,12 @@ def removeResource():
     if os.path.isdir(imageDir):
         shutil.rmtree(imageDir)
 
+    print('__ 영상 리소스 삭제 종료 __')
+
 
 if __name__ == '__main__':
+    print(f'----------  시작 ({datetime.datetime.now()})  ----------')
+    print('__ 디렉토리 검증 및 생성 시작 __')
     scenarioDir = f"{resourcePath}/Scenario"
     audioDir = f"{resourcePath}/Audio"
     imageDir = f"{resourcePath}/Image"
@@ -136,7 +171,10 @@ if __name__ == '__main__':
     if not os.path.isdir(uploadTmpDir):
         os.makedirs(uploadTmpDir)
 
+    print('__ 디렉토리 검증 및 생성 종료 __')
+
     gptResponse = callChatGPT()
     makeResource(gptResponse)
     makeShorts()
     removeResource()
+    print(f'----------  종료 ({datetime.datetime.now()})  ----------')

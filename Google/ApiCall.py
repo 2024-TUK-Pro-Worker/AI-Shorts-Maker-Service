@@ -16,6 +16,7 @@ class ApiCall:
         ]
 
     def callTTS(self, speech, voice, filename):
+        print(f'__ Google TTS 호출 시도 __')
 
         client = texttospeech.TextToSpeechClient()
 
@@ -59,7 +60,10 @@ class ApiCall:
             audio_data.append(response.audio_content)
 
         audio_data = b"".join(audio_data)
+        print(f'__ Google TTS 호출 성공 __')
 
         # 파일 저장
+        print(f'__ Google TTS 파일 저장 시도 __')
         with open(f"{self.audioPath}/{filename}.mp3", "wb") as out:
             out.write(audio_data)
+        print(f'__ Google TTS 파일 저장 성공 __')
