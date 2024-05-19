@@ -50,7 +50,7 @@ class ApiCall:
 
             audio_config = texttospeech.AudioConfig(
                 audio_encoding=texttospeech.AudioEncoding.MP3,
-                volume_gain_db=10.0
+                volume_gain_db=2.0
             )
 
             response = client.synthesize_speech(
