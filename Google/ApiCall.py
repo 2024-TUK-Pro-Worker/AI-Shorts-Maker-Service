@@ -6,7 +6,7 @@ load_dotenv()
 
 class ApiCall:
     def __init__(self):
-        self.resourcePath = f'{os.getenv("RESOURCE_PATH")}/{os.getenv("UUID")}'
+        self.resourcePath = f'{os.getenv("RESOURCE_PATH")}'
         self.audioPath = self.resourcePath + '/Audio'
 
     def getTTSVoiceList(self):
