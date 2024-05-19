@@ -10,7 +10,7 @@ from OpenAI import callChatGPT, callDallE
 from Google import callTTS, getTTSVoiceList
 
 load_dotenv()
-resourcePath = os.getenv("RESOURCE_PATH")
+resourcePath = f'{os.getenv("RESOURCE_PATH")}/{os.getenv("UUID")}'
 uuid = os.getenv("UUID")
 title = ''
 

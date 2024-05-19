@@ -9,7 +9,7 @@ load_dotenv()
 class ApiCall:
     def __init__(self):
         self.gptClient = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.resourcePath = os.getenv("RESOURCE_PATH")
+        self.resourcePath = f'{os.getenv("RESOURCE_PATH")}/{os.getenv("UUID")}'
         self.imagePath = self.resourcePath + '/Image'
         self.promptPath = self.resourcePath + '/Prompt'
 
