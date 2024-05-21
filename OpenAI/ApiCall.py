@@ -10,6 +10,7 @@ class ApiCall:
     def __init__(self):
         self.gptClient = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.resourcePath = f'{os.getenv("RESOURCE_PATH")}'
+        self.trialStatus = f'{os.getenv("TRIAL_STAUTS")}'
         self.imagePath = self.resourcePath + '/Image'
         self.promptPath = self.resourcePath + '/Prompt'
 
@@ -19,12 +20,18 @@ class ApiCall:
         promptType = ''
 
         print('__ GPT 프롬프트 내용 호출 시도 __')
-        db = pymysql.connect(host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')), user=os.getenv('DB_USER'), password=os.getenv('DB_PW'),
-                             db=os.getenv('DB_NAME'), charset=os.getenv('DB_CHARSET'))
-        cur = db.cursor()
-        cur.execute("SELECT content FROM prompt WHERE uuid = %s", (os.getenv('UUID'),))
-        row = cur.fetchone()
-        db.close()
+        if self.trialStatus == 'N':
+            db = pymysql.connect(host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')), user=os.getenv('DB_USER'),
+                                 password=os.getenv('DB_PW'),
+                                 db=os.getenv('DB_NAME'), charset=os.getenv('DB_CHARSET'))
+            cur = db.cursor()
+            cur.execute("SELECT content FROM prompt WHERE uuid = %s", (os.getenv('UUID'),))
+            row = cur.fetchone()
+            db.close()
+        else:
+            row = [
+                '재미있고, 흥미진진한 드라마 시나리오를 작성해줘. 시나리오는 씬별로 구분 되어해. 씬은 3개를 만들어줘.'
+            ]
         print('__ GPT 프롬프트 내용 호출 성공 __')
 
         if row is not None:
